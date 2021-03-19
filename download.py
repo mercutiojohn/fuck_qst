@@ -14,17 +14,13 @@ from msedge.selenium_tools import Edge, EdgeOptions
 from time import sleep
 import wget
 
-username = "LCU2018205700"
-password = "gyc123456"
+username = ""
+password = ""
 
 getVideo = 0
 
-auth = "eyJhbGciOiJIUzUxMiJ9.eyJyZnQiOmZhbHNlLCJqdGkiOiJkNDIxMjZjN2UxMmM0ZDcyODcxMzhhYzRiZjI5YzIwMSIsImlzcyI6ImF1dGgiLCJzdWIiOiJhYzZkZmIxMzIxYjg0M2FjODM1ODZlNmM5OTEwMjYzOCIsImF1ZCI6WyIqIl0sImlhdCI6MTYxNTI1NTc5MCwibmJmIjoxNjE1MjU1NzkwLCJleHAiOjE2MTc4NDc3OTAsImFleCI6MCwicG1zIjp7ImV4YW0iOjQ2LCJiaWdkYXRhIjo5ODk1ODgxNzQ1NTUwLCJhdHRhY2htZW50Ijo0NjExNjg2MDE4NDI3Mzg3OTA2LCJjb3Vyc2UiOjY4NzE5NTcwMzU4LCJncmFkIjoxNTM4LCJiYXNlIjo2Njk0ODAyMn0sIm1hbiI6eyJhY2NvdW50SWQiOiJhYzZkZmIxMzIxYjg0M2FjODM1ODZlNmM5OTEwMjYzOCIsImFjY291bnQiOiJMQ1UyMDE4MjA1NzAwIiwibW9iaWxlIjoiMTk4NjE5MDg4MjgiLCJjYWxsaW5nQ29kZSI6Iis4NiIsIm1lbWJlcklkIjoiZTI4NTljMjYzNjcxMTFlOTgyMTJmYTE2M2VmNWJhOGEiLCJuYW1lIjoi6auY5a6H6L6wIiwic2V4IjoiTWFuIiwicG9ydHJhaXQiOiJodHRwczovL3N0YXRpY2ZpbGUuZWVjLWNuLmNvbS9kZWZhdWx0L3RlYWNoZXItbWFuLWhlYWQucG5nIiwidHlwZSI6IlN0dWRlbnQifSwib3JnIjp7InNjaG9vbElkIjoiZmY4MDgwODE2MjRkMmQ2ZjAxNjI2MTQwNmQ1ZTBlNjkiLCJzY2hvb2xDb2RlIjoiTENVIiwic2Nob29sTmFtZSI6IuiBiuWfjuWkp-WtpiIsImNvbGxlZ2VJZCI6ImZmODA4MDgxNjI0ZDJkNmYwMTYyNjE1NzViNDUwZjg3IiwiY29sbGVnZUNvZGUiOiJMQ1UtQzAwMiIsImNvbGxlZ2VOYW1lIjoi6K6h566X5py65a2m6ZmiIiwibWFqb3JJZCI6IjE5NTY5YWM0NGVlYjExZWE4OGZlZmExNjNlZjViYThhIiwibWFqb3JDb2RlIjoiTENVLUMwMDItUzAwNSIsIm1ham9yTmFtZSI6Iui9r-S7tuW3peeoiyIsImNsYXNzcmFkZUlkIjoiOGViMmIyNGM0ZWVkMTFlYTg4ZmVmYTE2M2VmNWJhOGEiLCJjbGFzc3JhZGVDb2RlIjoiTENVLUMwMDItUzAwNS0yMDE4LTE3MjAxODIwOSIsImNsYXNzcmFkZU5hbWUiOiIyMDE457qn6L2v5Lu25bel56iLMTcyMDE4MjA554-tIn19.y-Yb78ZvsMNyOpIoEkrIbW9gWs_wR0r-fTQl-6pqArtwY7N8Xvk9fyddhv_gdnx3yquwAAttunbz7HhXO80yaQ"
+auth = ""
 
-access_key_id = '1PG60VBB4MWJWS139PTB'
-expires = '1615953485'
-signature = 'xPrcPJN82P3TOXZUAO61k30A6S0%3D'
-# "https%3A%2F%2Fprivatefile.eec-cn.com%2F402880c077d38edf0177dc109246703b%2Fcourseware%2Fa080d49237e3406f8ce4f6f6813e0f5f.docx%3FAccessKeyId%3D1PG60VBB4MWJWS139PTB%26Expires%3D1615892375%26response-content-disposition%3Dinline%253B%2Bfilename*%2B%253D%2BUTF-8%2527%252720210303-PM-%2525E8%2525AF%2525BE%2525E5%2525A0%252582%2525E7%2525AC%252594%2525E8%2525AE%2525B0.docx%26Signature%3Dn0p%252FIssIgRIEwAOstp4ikRQ%252BDiE%253D"
 base_url = "https://www.eec-cn.com/api"
 headers = {
     'Host': 'www.eec-cn.com',
@@ -43,7 +39,7 @@ headers = {
 file_base_url = "https://privatefile.eec-cn.com"
 file_list = []
 
-course_name ='tmp'
+# course_name ='tmp'
 
 def getAllCourses():
     # All Courses
@@ -63,6 +59,7 @@ def getAllCourses():
 def getCourseChapter(requested_course, course_list):
     course_info = course_list[requested_course]
     course_id = course_info['id']
+    global course_name
     course_name = course_info['name']
     print(course_name)
     isExists = os.path.exists(course_name)
@@ -104,52 +101,52 @@ def getCourseContent(layer, layer_name, content_list):
         else:
             res_id = item['id']
             res_url = base_url + '/course/chapters/' + res_id + '/resources'
-            # try:
-            res_data = requests.get(res_url, headers=headers).json()['data'][0]
-            file_id = res_data['id']
-            file_attachment_id = res_data['attachmentId']
-            file_type = res_data['attachmentDTO']['type']
-            file_preview_url = "https://www.eec-cn.com/preView/" + file_attachment_id + "/1/" + file_id + "/1?userType=0"
             try:
-                browser.get(file_preview_url)
-                sleep(1)
-                input_first = browser.find_element_by_css_selector('body > div.qst-app-container > div.qst-tecs-src-onlineOreview-preview_ > div > div.qst-tecs-src-onlineOreview-preview__office-container > div > iframe')
-                file_url = input_first.get_attribute("src")
-                for i in range(layer):
-                    print("\t", end="")
-                file_url = urllib.parse.unquote(file_url[50:])
-                print("下载至:"+this_layer_name)
-                wget.download(file_url, this_layer_name + "."+file_type)
-                # if getVideo == 1:
-                #     file_list.append(file_url)
-                # elif getVideo == 2:
-                #     if res_data[0]['attachmentDTO']['type'] == 'mp4':
-                #         file_list.append(file_url)
-                # else:
-                #     if res_data[0]['attachmentDTO']['type'] != 'mp4':
-                #         file_list.append(file_url)
+                res_data = requests.get(res_url, headers=headers).json()['data'][0]
+                file_id = res_data['id']
+                file_attachment_id = res_data['attachmentId']
+                file_type = res_data['attachmentDTO']['type']
+                file_preview_url = "https://www.eec-cn.com/preView/" + file_attachment_id + "/1/" + file_id + "/1?userType=0"
+                try:
+                    browser.get(file_preview_url)
+                    sleep(1)
+                    input_first = browser.find_element_by_css_selector('body > div.qst-app-container > div.qst-tecs-src-onlineOreview-preview_ > div > div.qst-tecs-src-onlineOreview-preview__office-container > div > iframe')
+                    file_url = input_first.get_attribute("src")
+                    file_url = urllib.parse.unquote(file_url[50:])
+                    file_path = this_layer_name + "." + file_type
 
-                file_list.append(file_url)
-            except NoSuchElementException:
-                print(NoSuchElementException)
-            # except (TypeError, KeyError):
-            #     print("叶子节点内容获取失败")
-            #     print(requests.get(res_url, headers=headers).json())
-                # file_name = urllib.parse.quote_plus(res_data['attachmentDTO']['originFileName'])
-                # response_content_disposition = 'inline%3B+filename*+%3D+UTF-8%27%27' + file_name
-                # dt = '?AccessKeyId=' + access_key_id + '&Expires=' + expires + '&response-content-disposition=' + response_content_disposition + '&Signature=' + signature
-                # file_url = res_data['attachmentDTO']['url'] + dt
+                    if getVideo == 1:
+                        file_list.append([
+                            file_path,
+                            file_url
+                        ])
+                    elif getVideo == 2:
+                        if file_type == 'mp4':
+                            file_list.append([
+                                file_path,
+                                file_url
+                            ])
+                    else:
+                        if file_type != 'mp4':
+                            file_list.append([
+                                file_path,
+                                file_url
+                            ])
 
-                # res_url = file_base_url + res_data['attachmentDTO']['filePath']
+                except NoSuchElementException:
+                    print(NoSuchElementException)
+            except (TypeError, KeyError):
+                print("叶子节点内容获取失败")
+                print(requests.get(res_url, headers=headers).json())
 
 
 
 
 
-# File
-
-# others = "/"+course_template_id+"/courseware/6837174DA632426CA263995D56299A49.pptx?AccessKeyId=1PG60VBB4MWJWS139PTB&Expires=1615879187&response-content-disposition=inline%3B+filename*+%3D+UTF-8%27%2701_Internet%25E8%25B5%25B7%25E6%25BA%2590%25E4%25B8%258EHTML%25E6%25A6%2582%25E8%25BF%25B0.pptx&Signature=K0xNhWO2DpNBlQ05ZKmiWo3btmk%3D"
 if __name__ == '__main__':
+    username = input("输入用户名：")
+    password = input("输入密码：")
+
     driver_url = './edgedriver_win64/msedgedriver.exe'
     options = EdgeOptions()
     options.use_chromium = True
@@ -177,18 +174,32 @@ if __name__ == '__main__':
         getVideo = 2
     else:
         getVideo = 0
-
-    course_list = getAllCourses()
-    iterator = 1
-    for item in course_list:
-        print(str(iterator) + ". " + item['name'])
-        iterator += 1
     while 1:
+        file_list = []
+        course_list = getAllCourses()
+        iterator = 1
+        for item in course_list:
+            print(str(iterator) + ". " + item['name'])
+            iterator += 1
         requested_course = int(input("输入希望下载课程的编号:"))
         if requested_course >= 0 and requested_course <= len(course_list):
             requested_course -= 1
             content_list = getCourseChapter(requested_course, course_list)
             getCourseContent(0, '' + course_name, content_list)
+            for item in file_list:
+
+                print("下载至:" + item[0])
+                try:
+                    tmp = requests.get(item[1])
+                    # file_list.remove({item[0], item[1]})
+                    open(item[0], 'wb').write(tmp.content)
+                except requests.exceptions.ConnectionError:
+                    file_list.append({
+                        item[0],
+                        item[1]
+                    })
+                    print("尝试在队末重新下载")
+
             # with open(course_list[requested_course]['name'] + '.txt', mode='x') as file:
             #     for item in file_list:
             #         file.write(item + '\n')
